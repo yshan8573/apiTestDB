@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="api">
+	
+	<insert id="insertApi" parameterType="hashMap">
+		INSERT INTO RareMdcinInfoService VALUES (
+			#{RARITY_DRUG_APPOINT_NO},
+			#{MANUFPLACE_NAME},
+			#{APPLY_NAME},
+			#{APPLY_TEL_NO},
+			#{MANUFPLACE_ZIP_NO},
+			#{MANUFPLACE_ADDR1},
+			#{MANUFPLACE_ADDR2},
+			#{MANUFPLACE_TEL_NO},
+			#{PRODT_NAME},
+			#{TARGET_DISEASE},
+			#{GOODS_NAME},
+			#{MANUF_NAME},
+			#{APPOINT_DATE},
+			#{APPOINT_CANCEL_DATE},
+			#{RECEIPT_NO}
+		)
+	</insert>
+</mapper>

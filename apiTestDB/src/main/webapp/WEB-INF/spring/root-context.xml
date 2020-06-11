@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	
+	<!--##### (추가) DataSource : 시작 ##### -->
+	<!-- # DataSource * pom.xml의 spring-jdbc 사용 * 기능 - 데이터베이스 연결(Connection) - Connection Pool -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" />
+		<property name="username" value="apidb" />
+		<property name="password" value="apidb" />
+	</bean>
+	<!--##### (추가) DataSource : 종료 ##### -->
+
+	<!--##### (추가) MyBatis-Spring 연동 : 시작 ##### -->
+	<!-- # SqlSessionFactoryBean * Spring 이므로 SqlSessionFactoryBean 사용. 순수 MyBatis라면, 
+		SqlSessionFactoryBulider 사용 * 기능 - SqlSessionFactory 생성 - SqlSessionFactory는 
+		SqlSession을 생성 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:/mybatis-config.xml" /><!-- Mybatis 설정 -->
+		<property name="mapperLocations" value="classpath:/mappers/**/*Mapper.xml" /><!-- SQL 작성 -->
+	</bean>
+
+	<!-- # SqlSessionTemplate * sqlSession 구현 객체. Thread-safe. * 기능 - SQL 실행. 트랜잭션 관리 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+	<!--##### (추가) MyBatis-Spring 연동 : 종료 ##### -->
+	
+</beans>
